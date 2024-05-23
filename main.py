@@ -1,36 +1,22 @@
-from icecream import ic
 
+def findSubsets(array):
+    subsets = []
+    for i in range(2**len(array)):
+        subsets.append([])
 
-def findRelativeRanks(score):
-        """
-        :type score: List[int]
-        :rtype: List[str]
-        """
+    for idx, item in enumerate(array):
+        gap = 2**idx
+        x = 0
+        for i in range(2**len(array)):
+            if x == (gap * 2):
+                x = 1
+            else:
+                if x < gap:
+                    x += 1
+                else:
+                    subsets[i].append(item)
+                    x += 1
+    
+    return subsets
 
-        rank = []
-        pos = []
-        medals = ["Gold Medal", "Silver Medal", "Bronze Medal"]
-
-        new_score = sorted(score, reverse=True)
-
-        for idx, item in enumerate(new_score):
-            if idx < 3:
-                
-                pos.append(score.index(item))
-                rank.append(medals[idx])
-
-        for idx, item in enumerate(new_score):
-            if not idx < 3:
-                rank.append(str(len(rank) + 1))
-                pos.append(score.index(item))
-
-        for idx, item in enumerate(pos):
-             score[item] = rank[idx]
-        
-
-        return rank, pos, score
-
-
-score = [10,3,8,9,4]
-
-ic(findRelativeRanks(score))
+findSubsets([1, 2, 3])
